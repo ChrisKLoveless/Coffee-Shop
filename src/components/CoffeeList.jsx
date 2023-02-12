@@ -11,9 +11,10 @@ function CoffeeList(props){
       {props.coffeeList.map((coffee) =>
         <Coffee
           whenCoffeeClicked = { props.onCoffeeSelection }
-          names={coffee.names}
-          location={coffee.location}
-          issue={coffee.issue}
+          names={coffee.name}
+          origin={coffee.origin}
+          price={coffee.price}
+          roast={coffee.roast}
           id={coffee.id}
           key={coffee.id}/>
       )}
