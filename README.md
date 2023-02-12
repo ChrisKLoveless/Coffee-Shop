@@ -17,6 +17,7 @@
 ![Diagram](src/img/mock-up.jpg)
 
 ## Description
+This app is created to demonstrate proficiency with building a React Application that manages local and shared state. The user is able to track the inventory of items and be notified when the item is out of stock.
 
 ## Setup/Installation Requirements
 
@@ -60,8 +61,7 @@ If you aren't satisfied with the build tool and configuration choices, you can `
 
 ## Known Bugs
 
-* _Any known issues_
-* _should go here_
+* none found
 
 ## License
 Copyright (c) 2022 Chris Loveless

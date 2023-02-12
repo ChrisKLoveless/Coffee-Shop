@@ -2,22 +2,23 @@ import React from "react";
 import PropTypes from "prop-types";
 import ReusableForm from "./ReusableForm";
 
-function EditCoffeeForm(props){
+function EditCoffeeForm(props) {
   const { coffee } = props;
 
   function handleEditCoffeeFormSubmission(event) {
     event.preventDefault();
     props.onEditCoffee({
-      name: event.target.name.value, 
-      origin: event.target.origin.value, 
-      price: event.target.price.value, 
+      name: event.target.name.value,
+      origin: event.target.origin.value,
+      price: event.target.price.value,
       roast: event.target.roast.value,
-      id: coffee.id});
+      id: coffee.id
+    });
   }
 
   return (
     <React.Fragment>
-      <ReusableForm 
+      <ReusableForm
         formSubmissionHandler={handleEditCoffeeFormSubmission}
         buttonText="Update Coffee" />
     </React.Fragment>

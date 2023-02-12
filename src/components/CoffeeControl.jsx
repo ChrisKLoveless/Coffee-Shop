@@ -21,7 +21,7 @@ class CoffeeControl extends React.Component {
   handleSellPound = (id) => {
     const selectedCoffee = this.state.mainCoffeeList.filter(coffee => coffee.id === id)[0];
     if (selectedCoffee.pounds === 0) {
-      this.setState({ outOfStock: `${selectedCoffee.name} is out of stock!`})
+      this.setState({ outOfStock: `${selectedCoffee.name} is out of stock!` });
     }
     else {
       selectedCoffee.pounds -= 1;
@@ -29,10 +29,10 @@ class CoffeeControl extends React.Component {
       const newMainCoffeeList = this.state.mainCoffeeList
         .filter(coffee => coffee.id !== id)
         .concat(selectedCoffee);
-  
+
       let currPoundsSold = this.state.poundsSold;
       currPoundsSold++;
-  
+
       this.setState({
         mainInventoryList: newMainCoffeeList,
         poundsSold: currPoundsSold,
