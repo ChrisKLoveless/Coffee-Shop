@@ -1,17 +1,20 @@
-# (Application Name)
+# Coffee Shop
 
-#### (Brief Description of Application)
+#### Epicodus Week 16 Code Review
 
-#### By (Your Name Here)
+#### By Chris Loveless
 
 ## Technologies Used
 
-* _List all_
-* _the major technologies_
-* _you used in your project_
-* _here_
+* _React_
+* _JavaScript_
+* _JSX_
+* _CSS_
+* _HTML_
+* _npm_
 
 ## Mock-Up
+![Diagram](src/img/mock-up.jpg)
 
 ## Description
 
