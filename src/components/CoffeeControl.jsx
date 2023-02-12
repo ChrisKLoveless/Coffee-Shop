@@ -12,8 +12,33 @@ class CoffeeControl extends React.Component {
       formVisibleOnPage: false,
       mainCoffeeList: [],
       selectedCoffee: null,
-      editing: false
+      editing: false,
+      poundsSold: 0,
+      outOfStock: ''
     };
+  }
+
+  handleSellPound = (id) => {
+    const selectedCoffee = this.state.mainCoffeeList.filter(coffee => coffee.id === id)[0];
+    if (selectedCoffee.pounds === 0) {
+      this.setState({ outOfStock: `${selectedCoffee.name} is out of stock!`})
+    }
+    else {
+      selectedCoffee.pounds -= 1;
+
+      const newMainCoffeeList = this.state.mainCoffeeList
+        .filter(coffee => coffee.id !== id)
+        .concat(selectedCoffee);
+  
+      let currPoundsSold = this.state.poundsSold;
+      currPoundsSold++;
+  
+      this.setState({
+        mainInventoryList: newMainCoffeeList,
+        poundsSold: currPoundsSold,
+        outOfStock: ''
+      });
+    }
   }
 
   handleEditingCoffeeInList = (coffeeToEdit) => {
@@ -23,32 +48,41 @@ class CoffeeControl extends React.Component {
     this.setState({
       mainCoffeeList: editedMainCoffeeList,
       editing: false,
-      selectedCoffee: null
+      selectedCoffee: null,
+      outOfStock: ''
     });
   }
 
   handleEditClick = () => {
-    this.setState({ editing: true });
+    this.setState({
+      editing: true,
+      outOfStock: ''
+    });
   }
 
   handleDeletingCoffee = (id) => {
     const newMainCoffeeList = this.state.mainCoffeeList.filter(coffee => coffee.id !== id);
     this.setState({
       mainCoffeeList: newMainCoffeeList,
-      selectedCoffee: null
+      selectedCoffee: null,
+      outOfStock: ''
     });
   }
 
   handleChangingSelectedCoffee = (id) => {
     const selectedCoffee = this.state.mainCoffeeList.filter(coffee => coffee.id === id)[0];
-    this.setState({ selectedCoffee: selectedCoffee });
+    this.setState({
+      selectedCoffee: selectedCoffee,
+      outOfStock: ''
+    });
   }
 
   handleAddingNewCoffeeToList = (newCoffee) => {
     const newMainCoffeeList = this.state.mainCoffeeList.concat(newCoffee);
     this.setState({
       mainCoffeeList: newMainCoffeeList,
-      formVisibleOnPage: false
+      formVisibleOnPage: false,
+      outOfStock: ''
     });
   }
 
@@ -57,11 +91,13 @@ class CoffeeControl extends React.Component {
       this.setState({
         formVisibleOnPage: false,
         selectedCoffee: null,
-        editing: false 
+        editing: false,
+        outOfStock: ''
       });
     } else {
       this.setState(prevState => ({
         formVisibleOnPage: !prevState.formVisibleOnPage,
+        outOfStock: ''
       }));
     }
   }
@@ -69,10 +105,12 @@ class CoffeeControl extends React.Component {
   render() {
     let currentlyVisibleState = null;
     let buttonText = null;
+    let outOfStock = this.state.outOfStock;
+
     if (this.state.editing) {
-      currentlyVisibleState = <EditCoffeeForm 
-      coffee = {this.state.selectedCoffee} 
-      onEditCoffee = {this.handleEditingCoffeeInList} />
+      currentlyVisibleState = <EditCoffeeForm
+        coffee={this.state.selectedCoffee}
+        onEditCoffee={this.handleEditingCoffeeInList} />
       buttonText = "Return to Coffee List";
     }
     else if (this.state.selectedCoffee != null) {
@@ -84,18 +122,21 @@ class CoffeeControl extends React.Component {
       buttonText = "Return to Coffee List";
     }
     else if (this.state.formVisibleOnPage) {
-      currentlyVisibleState = <NewCoffeeForm 
-      onNewCoffeeCreation={this.handleAddingNewCoffeeToList} />
+      currentlyVisibleState = <NewCoffeeForm
+        onNewCoffeeCreation={this.handleAddingNewCoffeeToList} />
       buttonText = "Return to Coffee List";
     }
     else {
-      currentlyVisibleState = <CoffeeList 
-      coffeeList={this.state.mainCoffeeList} 
-      onCoffeeSelection={this.handleChangingSelectedCoffee} />
+      currentlyVisibleState = <CoffeeList
+        coffeeList={this.state.mainCoffeeList}
+        onCoffeeSelection={this.handleChangingSelectedCoffee}
+        onSellPound={this.handleSellPound} />
       buttonText = "Add Coffee";
     }
     return (
       <React.Fragment>
+        <h3>{outOfStock}</h3>
+        <h4>{this.state.poundsSold} lbs sold!</h4>
         {currentlyVisibleState}
         <button onClick={this.formHandleClick}> {buttonText} </button>
       </React.Fragment>
